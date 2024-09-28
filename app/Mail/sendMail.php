@@ -9,21 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class TicketReplyMail extends Mailable
+class sendMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $editData; // pass data to email view
+    public $emailData;
 
-    public function __construct($editData)
+    /**
+     * Create a new message instance.
+     */
+    public function __construct($emailData)
     {
-        $this->editData = $editData;
-    }
-
-    public function build()
-    {
-        return $this->view('emails.ticket-reply')
-            ->with('editData', $this->editData);
+        $this->emailData = $emailData;
     }
 
     /**
@@ -32,7 +29,7 @@ class TicketReplyMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Ticket Reply Mail',
+            subject: 'Send Mail',
         );
     }
 
@@ -42,7 +39,11 @@ class TicketReplyMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.ticket-reply',
+            with: [
+                'email' => $this->emailData['email'],
+                'comment' => $this->emailData['comment']
+            ]
         );
     }
 

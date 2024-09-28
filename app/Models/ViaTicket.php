@@ -5,12 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Ticket;
+use App\Models\ViaTicket;
 
 class ViaTicket extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'type',
+        'ticket_id',
+        'comment',
+        'sender_id'
+    ];
 
     public function ticket()
     {
@@ -24,7 +31,7 @@ class ViaTicket extends Model
 
     public function comments()
     {
-        return $this->hasMany(ViaTicket::class, 'ticket_id');
+        return $this->hasMany(ViaTicket::class, 'ticket_no', 'ticket_id');
     }
 
 }

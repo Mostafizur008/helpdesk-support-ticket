@@ -37,7 +37,7 @@
                             <td>{{$channel->department->name}}</td>
                             <td>User</td>
                             <td>
-                                <a type="button" href="{{route('r.edit',$channel->id)}}" class="btn btn-sm btn-primary"> <i class="bx bx-pen"></i></a>
+                                <a type="button" href="{{route('r.edit',$channel->ticket_no)}}" class="btn btn-sm btn-primary"> <i class="bx bx-pen"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -50,7 +50,7 @@
     <div class="col-5">
         <div class="card">
             <div class="card-body">
-                <form action="{{ isset($editData) ? route('rt', $editData->id) : route('r.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ isset($editData) ? route('rt', $editData->ticket_no) : route('r.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @if(isset($editData))
                         @method('PUT')

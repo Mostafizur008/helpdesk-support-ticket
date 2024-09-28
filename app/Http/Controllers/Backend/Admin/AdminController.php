@@ -8,7 +8,7 @@ use App\Models\Priority;
 use App\Models\Department;
 use App\Models\Ticket;
 use App\Models\ViaTicket;
-use App\Mail\TicketReplyMail;
+use App\Mail\sendMail;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
@@ -168,21 +168,18 @@ class AdminController extends Controller
         return view('backend.dashboard.admin.page.reply-ticket', compact('allData'));
     }
 
-    public function rEdit($id)
+    public function rEdit($ticket_no)
     {
         $allData = Ticket::where('status', 1)->get();
-        $editData = Ticket::with('comments')->join('via_tickets','tickets.id','=','via_tickets.ticket_id')
-        ->select('via_tickets.*','tickets.*')
-        ->where('tickets.status', 1)
-        ->where('tickets.id', $id)
-        ->first();
+
+        $editData = Ticket::with(['comments'])->where('ticket_no', $ticket_no)->first();
         // dd($editData);
         return view('backend.dashboard.admin.page.reply-ticket', compact('allData', 'editData'));
     }
 
-    public function rUpdate(Request $request,$id)
+    public function rUpdate(Request $request,$ticket_no)
     {
-        $ticket = Ticket::find($id);
+        $ticket = Ticket::where('ticket_no', $ticket_no)->first();
         $ticket->status = $request->status;
         $ticket->save();
 
@@ -192,7 +189,15 @@ class AdminController extends Controller
         $data->ticket_id = $ticket->ticket_no;
         $data->sender_id = Auth::id();
 
-        $data->update();
+        $data->save();
+
+        $emailData = [
+            'email' => Auth::user()->email,
+            'comment' => $request->comment
+        ];
+        Mail::to(Auth::user()->email)->send(new sendMail($emailData));
+    
+
         $notification = array(
             'message' => 'Reply Update Successfully',
             'alert-type' => 'info'

@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('via_tickets', function (Blueprint $table) {
             $table->id();
             $table->integer('type')->default(1);
-            $table->foreignId('ticket_id')->constrained('tickets')->cascadeOnDelete();
-            $table->foreignId('sender_id')->constrained('users')->cascadeOnDelete();
+            $table->integer('ticket_id')->nullable();
+            $table->integer('sender_id')->nullable();
             $table->text('comment');
             $table->timestamps();
         });

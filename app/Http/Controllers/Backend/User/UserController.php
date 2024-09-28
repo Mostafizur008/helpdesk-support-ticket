@@ -9,7 +9,7 @@ use App\Models\Department;
 use App\Models\ViaTicket;
 use App\Models\Ticket;
 use App\Models\User;
-use App\Mail\TicketReplyMail;
+use App\Mail\sendMail;
 use Illuminate\Support\Facades\Mail;
 use Auth;
 
@@ -64,35 +64,40 @@ class UserController extends Controller
         return redirect()->route('ticket')->with('success', 'Ticket created successfully!');
     }
 
-    public function reEdit($id)
+    public function reEdit($ticket_no)
     {
-        $allData = Ticket::with('comments')->leftJoin('via_tickets','tickets.id','via_tickets.ticket_id')
-        ->select('via_tickets.*','tickets.*')
-        ->where('tickets.status', 1)
-        ->where('tickets.id', $id)
-        ->first();
+        $allData = Ticket::with(['comments'])->where('ticket_no', $ticket_no)->first();
 
-        // Mail::to('mostafizur.rahman0888@gmail.com.com')->send(new TicketReplyMail($editData));
+        // dd($allData->ticket_no);
     
         return view('backend.dashboard.user.page.reply', compact('allData'));
     }
 
-    public function reUpdate(Request $request,$id)
+    public function reUpdate(Request $request,$ticket_no)
     {
-        $ticket = Ticket::find($id);
+        $ticket = Ticket::where('ticket_no', $ticket_no)->first();
 
         $data = new ViaTicket();
         $data->type = 1;
         $data->comment = $request->comment;
-        $data->ticket_id = $ticket->id;;
+        $data->ticket_id = $ticket->ticket_no;
         $data->sender_id = Auth::id();
 
         $data->save();
+
+        // dd($data); 
+
+        $emailData = [
+            'email' => Auth::user()->email,
+            'comment' => $request->comment
+        ];
+        Mail::to(Auth::user()->email)->send(new sendMail($emailData));
+
         $notification = array(
             'message' => 'Reply Update Successfully',
             'alert-type' => 'info'
         );
-        return redirect()->route('reEdit', $ticket->id)->with($notification);
+        return redirect()->route('res', $ticket->ticket_no)->with($notification);
     }
 
     public function indexProfile()

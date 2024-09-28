@@ -55,7 +55,7 @@
                             </td>
                             <td>
                                 @if($channel->status == 1)
-                                <a href="{{ route('reEdit', $channel->id) }}" class="btn btn-sm btn-primary">
+                                <a href="{{ route('res', $channel->ticket_no) }}" class="btn btn-sm btn-primary">
                                     <i class="bx bx-reply"></i>
                                 </a>
                             @endif

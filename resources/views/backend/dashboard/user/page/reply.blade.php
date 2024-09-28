@@ -20,10 +20,10 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{route('ret', $allData->id)}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('ret', $allData->ticket_no)}}" method="post" enctype="multipart/form-data">
                     @csrf
-                    @if(isset($editData))
-                        @method('PUT')
+                    @if(isset($allData))
+                        @method('POST')
                     @endif
                 <div class="row">
                     <div class="col-md-12">
@@ -99,7 +99,7 @@
 
                     <div>
                         <div class="col-12" align="right">
-                            <input type="submit" class="btn btn-success waves-effect waves-light" value="{{ isset($editData) ? 'Reply' : 'Reply' }}">
+                            <input type="submit" class="btn btn-success waves-effect waves-light" value="{{ isset($allData) ? 'Reply' : 'Reply' }}">
                         </div>
                     </div>
             </div>

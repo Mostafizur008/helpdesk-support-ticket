@@ -31,8 +31,8 @@ Route::middleware(['admin'])->group(function () {
 
     Route::get('admin/ticket', [AdminController::class, 'indexTicket'])->name('am.ticket');
     Route::get('admin/reply-ticket', [AdminController::class, 'replyTicket'])->name('r.ticket');
-    Route::get('admin/edit-reply/{id}', [AdminController::class, 'rEdit'])->name('r.edit');
-    Route::put('/admin/update-reply/{id}',[AdminController::class,'rUpdate'])->name('rt');
+    Route::get('admin/edit-reply/{ticket_no}', [AdminController::class, 'rEdit'])->name('r.edit');
+    Route::put('/admin/update-reply/{ticket_no}',[AdminController::class,'rUpdate'])->name('rt');
     Route::post('admin/store-reply', [AdminController::class, 'rStore'])->name('r.store');
 
     Route::get('admin/close-ticket', [AdminController::class, 'indexCloseTicket'])->name('cl.ticket');
@@ -57,9 +57,9 @@ Route::middleware(['user'])->group(function () {
     Route::get('user/ticket', [UserController::class, 'ticket'])->name('ticket');
     Route::get('user/open-ticket', [UserController::class, 'openTicket'])->name('open.ticket');
     Route::post('user/store-ticket', [UserController::class, 'storeTicket'])->name('store.ticket');
-    Route::post('/user/update-reply/{id}',[UserController::class,'reUpdate'])->name('ret');
 
-    Route::get('user/reply/{id}', [UserController::class, 'reEdit'])->name('reEdit');
+    Route::get('user/reply/{ticket_no}', [UserController::class, 'reEdit'])->name('res');
+    Route::post('/user/update-reply/{ticket_no}',[UserController::class,'reUpdate'])->name('ret');
 
     Route::get('user/profile', [UserController::class, 'indexProfile'])->name('profile.view');
     Route::post('user/update',[UserController::class,'ProfileUpdate'])->name('profile.updated');

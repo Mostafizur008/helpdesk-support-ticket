@@ -6,30 +6,42 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Ticket;
+use App\Models\ViaTicket;
 
 class Ticket extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
-
-    protected $casts = [
-        'images' => 'json'
+    protected $fillable = [
+        'ticket_no',
+        'priority_id',
+        'department_id',
+        'subject',
+        'details',
+        'images',
+        'status',
+        'user_id'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function department()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class, 'department_id', 'id');
     }
 
     public function priority()
     {
-        return $this->belongsTo(Priority::class);
+        return $this->belongsTo(Priority::class, 'priority_id', 'id');
     }
 
     public function via()
@@ -39,8 +51,13 @@ class Ticket extends Model
 
     public function comments()
     {
-        return $this->hasMany(ViaTicket::class, 'ticket_id');
+        return $this->hasMany(ViaTicket::class, 'ticket_id', 'ticket_no');
     }
+
+    // public function comments()
+    // {
+    //     return $this->hasMany(ViaTicket::class);
+    // }
 
     protected static function boot()
     {
