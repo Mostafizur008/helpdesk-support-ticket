@@ -99,40 +99,44 @@
                                     <td colspan="4" class="text-center">No data available.</td>
                                 </tr>
                             @endif
-                            @if(isset($editData->comments) && $editData->comments->count() > 0)
-                            @php
-                                $counter = 0;
-                            @endphp
-                        
-                            @foreach ($editData->comments as $comment)
-                                @php
-                                    $counter++;
-                                @endphp
-                        
-                                <tr>
-                                    @if($counter % 2 == 1)
-                                        <td colspan="4" style="text-align: left;">
-                                            <div class="btn btn-sm btn-info">{{ $comment->sender->name }}</div> - 
-                                            <font color="red">{{ $comment->created_at->diffForHumans() }}</font> 
-                                            <br/>{{ $comment->comment }}
-                                        </td>
-                                    @else
-                                        <td colspan="4" style="text-align: right;">
-                                            <font color="red">{{ $comment->created_at->diffForHumans() }}</font> - <div class="btn btn-sm btn-info">{{ $comment->sender->name }}</div>
-                                            <br/>{{ $comment->comment }}
-                                        </td>
-                                    @endif
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="4" class="text-center">No comments available.</td>
-                            </tr>
-                        @endif
                         
                             </tbody>
-                        
                         </table>
+
+                        @if(isset($editData->comments) && $editData->comments->count() > 0)
+                        @php
+                            $counter = 0;
+                        @endphp
+                    
+                        @foreach ($editData->comments as $comment)
+                            @php
+                                $counter++;
+                            @endphp
+                    
+                            <table style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
+                                @if($counter % 2 == 1)
+                                    <div style="text-align: left;">
+                                        <div class="btn btn-sm btn-info">{{ $comment->sender->name }}</div> - 
+                                        <font color="red">{{ $comment->created_at->diffForHumans() }}</font>
+                                        <br/>{{ \Illuminate\Support\Str::words($comment->comment, 35) }}
+                                    </div>
+                                @else
+                                    <div style="text-align: right;">
+                                        <font color="red">{{ $comment->created_at->diffForHumans() }}</font> - 
+                                        <div class="btn btn-sm btn-info">{{ $comment->sender->name }}</div>
+                                        <br/>{{ \Illuminate\Support\Str::words($comment->comment, 35) }}
+                                    </div>
+                                @endif
+                                </table>
+                            
+                                @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="4" class="text-center">No comments available.</td>
+                                    </tr>
+                                @endif
+
+
                     </div>
 
                     <div class="mb-3">
@@ -145,10 +149,11 @@
                             <input type="submit" class="btn btn-success waves-effect waves-light" value="{{ isset($editData) ? 'Reply' : 'Reply' }}">
                         </div>
                     </div>
+                </form>
             </div>
-        </form>
         </div>
     </div>
 </div>
+
 
 @endsection

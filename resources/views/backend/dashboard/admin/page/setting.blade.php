@@ -48,16 +48,26 @@
                             <input type="text" class="form-control" id="formrow-firstname-input" name="email" value="{{$settings->email}}" placeholder="Enter Email">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label for="formrow-firstname-input" class="form-label">Logo Upload</label>
-                            <input type="file" class="form-control" id="formrow-firstname-input" name="images" value="{{$settings->images}}">
+                            <input type="file" class="form-control" id="formrow-firstname-input" name="images" id="images" value="{{$settings->images}}">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="form-group col-md-2 mb-0">
+                        <div class="form-group">
+                            <img id="showPhoto" src="{{ (!empty($settings->images)) ? url('backend/all-images/web/logo/'.$settings->images) : url('backend/all-images/others/default/img.gif') }}" alt="image" class="profile-user-img" width="100px" height="100px"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label for="formrow-firstname-input" class="form-label">Icon Upload</label>
-                            <input type="file" class="form-control" id="formrow-firstname-input" name="icon" value="{{$settings->icon}}">
+                            <input type="file" class="form-control" id="formrow-firstname-input" name="icon" id="icon" value="{{$settings->icon}}">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2 mb-5">
+                        <div class="form-group">
+                            <img id="showPhoto" src="{{ (!empty($settings->icon)) ? url('backend/all-images/web/logo/icon/'.$settings->icon) : url('backend/all-images/others/default/img.gif') }}" alt="image" class="profile-user-img" width="100px" height="100px"/>
                         </div>
                     </div>
                 </div>
