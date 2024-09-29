@@ -1,7 +1,7 @@
 ![Busniess-Web-Banner-05](https://github.com/Mostafizur008/inventory-software/assets/107453434/bf0c4eef-462d-409f-a60a-f33ab5b88779)
 
 ## Laravel Inventory (POS) Software
-MRSBD is developed for Inventory like pos software built on Laravel 9.....Link : https://m.mrsbd.xyz
+MRSBD is developed for Support Ticket System software built on Laravel 10.....Link : https://m.mrsbd.xyz
 
 ### Login System
 ![Screenshot 2024-09-29 234556](https://github.com/user-attachments/assets/a5669a75-c542-4009-b66f-40a76cd1bfa5)
@@ -36,7 +36,7 @@ Check Laravel 10 Requirements https://laravel.com/docs/10.x
 - JAVASCRIPT<br>
 - AJAX<br>
 - PHP<br>
-- LARAVEL 9<br>
+- LARAVEL 10<br>
 - MYSQL
 
 ## Contributing
