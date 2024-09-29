@@ -192,9 +192,11 @@ class AdminController extends Controller
         $data->save();
 
         $emailData = [
+            'name' => Auth::user()->name,
             'email' => Auth::user()->email,
             'comment' => $request->comment
         ];
+        
         Mail::to(Auth::user()->email)->send(new sendMail($emailData));
     
 

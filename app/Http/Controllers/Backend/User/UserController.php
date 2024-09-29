@@ -30,9 +30,10 @@ class UserController extends Controller
 
     public function ticket()
     {
-        $allData = Ticket::with(['via.sender', 'user'])->latest()->paginate(5);
-        $reply = $allData->first() ? $allData->first()->via()->with('sender')->latest()->limit(10)->get() : [];
-        return view('backend.dashboard.user.page.ticket', compact('allData', 'reply'));
+        $userId = Auth::id();
+        $allData = Ticket::with(['via.sender', 'user']) ->where('user_id', $userId)->latest()->paginate(5);
+        // $reply = $allData->first() ? $allData->first()->via()->with('sender')->latest()->limit(10)->get() : [];
+        return view('backend.dashboard.user.page.ticket', compact('allData'));
     }
 
     public function openTicket()
@@ -88,6 +89,7 @@ class UserController extends Controller
         // dd($data); 
 
         $emailData = [
+            'name' => Auth::user()->name,
             'email' => Auth::user()->email,
             'comment' => $request->comment
         ];

@@ -41,6 +41,7 @@ class sendMail extends Mailable
         return new Content(
             view: 'emails.ticket-reply',
             with: [
+                'name' => $this->emailData['name'],
                 'email' => $this->emailData['email'],
                 'comment' => $this->emailData['comment']
             ]
