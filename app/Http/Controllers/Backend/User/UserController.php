@@ -104,7 +104,8 @@ class UserController extends Controller
 
     public function indexProfile()
     {
-        return view('backend.dashboard.user.page.profile')->with('users',User::where('role',0)->first());
+        $userId = Auth::id();
+        return view('backend.dashboard.user.page.profile')->with('users',User::where('role',0)->where('id', $userId)->first());
     }
 
     public function ProfileUpdate(Request $request)
@@ -113,12 +114,14 @@ class UserController extends Controller
             $settings->name = $request->name;
             $settings->email = $request->email;
             
-            if($request->file('image')){
-                $file= $request->file('image');
-                @unlink(public_path('backend/all-images/web/logo/'.$settings->image));
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file-> move(public_path('backend/all-images/web/logo/'), $filename);
-                $settings['image']= $filename;
+            if($request->hasFile('image')){
+                $file = $request->file('image');
+                if ($settings->image && file_exists(public_path('backend/all-images/web/logo/'.$settings->image))) {
+                    @unlink(public_path('backend/all-images/web/logo/'.$settings->image));
+                }
+                $filename = date('YmdHi') . $file->getClientOriginalName();
+                $file->move(public_path('backend/all-images/web/logo/'), $filename);
+                $settings->image = $filename;
             }
 
             $settings->save();

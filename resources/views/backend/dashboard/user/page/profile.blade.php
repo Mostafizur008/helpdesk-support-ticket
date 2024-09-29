@@ -39,7 +39,12 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="formrow-firstname-input" class="form-label">Logo Upload</label>
-                            <input type="file" class="form-control" id="formrow-firstname-input" name="images" value="{{$users->image}}">
+                            <input type="file" class="form-control" id="formrow-firstname-input" name="image" value="{{$users->image}}" id="image">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2 mb-5">
+                        <div class="form-group">
+                            <img id="showPhoto" src="{{ (!empty($users->image)) ? url('backend/all-images/web/logo/'.$users->image) : url('backend/all-images/others/default/img.gif') }}" alt="image" class="profile-user-img" width="100px" height="100px"/>
                         </div>
                     </div>
                 </div>

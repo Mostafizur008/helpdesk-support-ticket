@@ -1,5 +1,7 @@
 @php
-$setting = DB::table('settings')->first();  
+$setting = DB::table('settings')->first();
+$userId = Auth::id();
+$users = DB::table('users')->where('id', $userId)->first();   
 @endphp
 
 <header id="page-topbar">
@@ -35,7 +37,7 @@ $setting = DB::table('settings')->first();
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{ Auth::user()->image }}"
+                    <img class="rounded-circle header-profile-user" src="{{ (!empty($users->image)) ? url('backend/all-images/web/logo/'.$users->image) : url('backend/all-images/others/default/img.gif') }}"
                         alt="{{ Auth::user()->name }}">
                     <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ Auth::user()->name }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>

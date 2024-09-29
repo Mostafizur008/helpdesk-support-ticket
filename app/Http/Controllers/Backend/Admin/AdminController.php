@@ -47,7 +47,13 @@ class AdminController extends Controller
         return redirect()->route('priority');
     }
 
-
+    public function pEdit($id)
+    {
+        $allData = Priority::all();
+        $editData = Priority::find($id);
+    
+        return view('backend.dashboard.admin.page.priority', compact('allData', 'editData'));
+    }
 
     public function pUpdate(Request $request,$id)
     {
@@ -159,7 +165,8 @@ class AdminController extends Controller
 
     public function indexProfile()
     {
-        return view('backend.dashboard.admin.page.profile')->with('users',User::where('role',1)->first());
+        $userId = Auth::id();
+        return view('backend.dashboard.admin.page.profile')->with('users',User::where('role',1)->where('id', $userId)->first());
     }
 
     public function replyTicket()
@@ -237,23 +244,25 @@ class AdminController extends Controller
         return redirect()->route('setting.update');
     }
 
-    public function ProfileUpdate(Request $request)
+    public function ProfileUpdateAdmin(Request $request)
     {
             $settings = Auth::user();
             $settings->name = $request->name;
             $settings->email = $request->email;
             
-            if($request->file('image')){
-                $file= $request->file('image');
-                @unlink(public_path('backend/all-images/web/logo/'.$settings->image));
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file-> move(public_path('backend/all-images/web/logo/'), $filename);
-                $settings['image']= $filename;
+            if($request->hasFile('image')){
+                $file = $request->file('image');
+                if ($settings->image && file_exists(public_path('backend/all-images/web/logo/'.$settings->image))) {
+                    @unlink(public_path('backend/all-images/web/logo/'.$settings->image));
+                }
+                $filename = date('YmdHi') . $file->getClientOriginalName();
+                $file->move(public_path('backend/all-images/web/logo/'), $filename);
+                $settings->image = $filename;
             }
 
             $settings->save();
 
-        return redirect()->route('profile.view');
+        return redirect()->route('profile.view_admin');
     }
     /**
      * Show the form for creating a new resource.
