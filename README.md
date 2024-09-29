@@ -1,8 +1,7 @@
 ![Busniess-Web-Banner-05](https://github.com/Mostafizur008/inventory-software/assets/107453434/bf0c4eef-462d-409f-a60a-f33ab5b88779)
 
-## Laravel Inventory (POS) Software
-MRSBD is developed for Support Ticket System software built on Laravel 10.....Link : https://m.mrsbd.xyz
-
+## Helpdesk Support Ticket System Software
+MRSBD is developed for Helpdesk Support Ticket System software built on Laravel 10.....
 ### Login System
 ![Screenshot 2024-09-29 234556](https://github.com/user-attachments/assets/a5669a75-c542-4009-b66f-40a76cd1bfa5)
 
@@ -18,6 +17,9 @@ MRSBD is developed for Support Ticket System software built on Laravel 10.....Li
 ![Screenshot 2024-09-29 234456](https://github.com/user-attachments/assets/73896c55-c3cc-4930-83ba-19f4bbe27f09)
 
 ![Screenshot 2024-09-29 234521](https://github.com/user-attachments/assets/a8c4a04d-e5f2-4156-abb6-690c413d5edb)
+
+![Screenshot 2024-09-29 235514](https://github.com/user-attachments/assets/39d5c2c4-54ac-4af0-bb7a-375399109ce8)
+
 
 ## Requirements
 Check Laravel 10 Requirements https://laravel.com/docs/10.x
